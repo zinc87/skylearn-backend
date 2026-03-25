@@ -12,9 +12,10 @@ def create_app():
     app.config.from_object(Config)
 
     CORS(app, resources={r"/api/*": {"origins": "*"}})
+    app.url_map.strict_slashes = False
 
     db.init_app(app)
-    migrate.init(app, db)
+    migrate.init_app(app, db)
 
     from app.routes import lessons, quizzes, code, progress, leaderboard
     app.register_blueprint(lessons.bp)
