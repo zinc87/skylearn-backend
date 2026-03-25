@@ -36,53 +36,53 @@ def _decode_token(token: str) -> dict:
         issuer=f"https://cognito-idp.{Config.COGNITO_REGION}.amazonaws.com/{Config.COGNITO_USER_POOL_ID}",
     )
 
-# def require_auth(f):
-#     """Decorator that protects a route — requires a valid Cognito JWT."""
-#     @wraps(f)
-#     def decorated(*args, **kwargs):
-#         auth_header = request.headers.get("Authorization", "")
-#         if not auth_header.startswith("Bearer "):
-#             return jsonify({"error": "Missing authorization token"}), 401
-
-#         token = auth_header.split(" ", 1)[1]
-#         try:
-#             payload = _decode_token(token)
-#             g.user_id = payload["sub"]
-#             g.email = payload.get("email", "")
-#             g.username = payload.get("cognito:username", payload.get("email", "").split("@")[0])
-
-#             # Auto-create user record on first login
-#             user = User.query.get(g.user_id)
-#             if not user:
-#                 user = User(
-#                     id=g.user_id,
-#                     username=g.username,
-#                     email=g.email,
-#                 )
-#                 db.session.add(user)
-#                 db.session.commit()
-
-#         except (JWTError, Exception) as e:
-#             return jsonify({"error": f"Invalid token: {str(e)}"}), 401
-
-#         return f(*args, **kwargs)
-#     return decorated
-
 def require_auth(f):
-    """DEV ONLY — bypasses Cognito, uses a fake test user."""
+    """Decorator that protects a route — requires a valid Cognito JWT."""
     @wraps(f)
     def decorated(*args, **kwargs):
-        g.user_id = "test-user-001"
-        g.email = "test@skylearn.dev"
-        g.username = "TestUser"
+        auth_header = request.headers.get("Authorization", "")
+        if not auth_header.startswith("Bearer "):
+            return jsonify({"error": "Missing authorization token"}), 401
 
-        # Auto-create the fake user if it doesn't exist
-        user = User.query.get(g.user_id)
-        if not user:
-            user = User(id=g.user_id, username=g.username, email=g.email)
-            db.session.add(user)
-            db.session.commit()
+        token = auth_header.split(" ", 1)[1]
+        try:
+            payload = _decode_token(token)
+            g.user_id = payload["sub"]
+            g.email = payload.get("email", "")
+            g.username = payload.get("cognito:username", payload.get("email", "").split("@")[0])
+
+            # Auto-create user record on first login
+            user = User.query.get(g.user_id)
+            if not user:
+                user = User(
+                    id=g.user_id,
+                    username=g.username,
+                    email=g.email,
+                )
+                db.session.add(user)
+                db.session.commit()
+
+        except (JWTError, Exception) as e:
+            return jsonify({"error": f"Invalid token: {str(e)}"}), 401
 
         return f(*args, **kwargs)
     return decorated
+
+# def require_auth(f):
+#     """DEV ONLY — bypasses Cognito, uses a fake test user."""
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         g.user_id = "test-user-001"
+#         g.email = "test@skylearn.dev"
+#         g.username = "TestUser"
+
+#         # Auto-create the fake user if it doesn't exist
+#         user = User.query.get(g.user_id)
+#         if not user:
+#             user = User(id=g.user_id, username=g.username, email=g.email)
+#             db.session.add(user)
+#             db.session.commit()
+
+#         return f(*args, **kwargs)
+#     return decorated
 
