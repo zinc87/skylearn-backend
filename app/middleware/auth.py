@@ -49,20 +49,27 @@ def require_auth(f):
             payload = _decode_token(token)
             g.user_id = payload["sub"]
             g.email = payload.get("email", "")
-            g.username = payload.get("cognito:username", payload.get("email", "").split("@")[0])
+            g.username = payload.get("preferred_username", payload.get("email", "").split("@")[0])
 
-            # Auto-create user record on first login
+            # Auto-create or update user record on login
             user = User.query.get(g.user_id)
             if not user:
-                user = User(
-                    id=g.user_id,
-                    username=g.username,
-                    email=g.email,
-                )
-                db.session.add(user)
+                try:
+                    user = User(
+                        id=g.user_id,
+                        username=g.username,
+                        email=g.email,
+                    )
+                    db.session.add(user)
+                    db.session.commit()
+                except Exception:
+                    db.session.rollback()
+            elif user.username != g.username:
+                user.username = g.username
                 db.session.commit()
 
         except (JWTError, Exception) as e:
+            print(f"AUTH ERROR: {str(e)}")
             return jsonify({"error": f"Invalid token: {str(e)}"}), 401
 
         return f(*args, **kwargs)
