@@ -97,12 +97,43 @@ lessons_data = [
 ]
 
 quiz_data = [
+    # Lesson 1
     {"id": "q1", "lesson_id": "lesson-1", "question": "What does `#include <iostream>` do?", "options": ["Declares a variable", "Imports the input/output library", "Starts the program", "Defines a function"], "correct_index": 1, "explanation": "The #include directive imports the iostream library for input/output operations."},
     {"id": "q2", "lesson_id": "lesson-1", "question": "What does `cout` do in C++?", "options": ["Reads input", "Outputs text to the console", "Declares a variable", "Includes a library"], "correct_index": 1, "explanation": "cout is the standard output stream in C++."},
     {"id": "q3", "lesson_id": "lesson-1", "question": "What does `return 0` mean in main()?", "options": ["The program crashed", "The program ended successfully", "A syntax error", "Nothing"], "correct_index": 1, "explanation": "Returning 0 from main indicates successful execution."},
+    # Lesson 2
     {"id": "q4", "lesson_id": "lesson-2", "question": "Which type stores decimal numbers?", "options": ["int", "char", "double", "bool"], "correct_index": 2, "explanation": "double stores floating-point (decimal) numbers."},
     {"id": "q5", "lesson_id": "lesson-2", "question": "What is the value of `bool isReady = true;`?", "options": ["0", "1 (true)", "\"true\"", "null"], "correct_index": 1, "explanation": "In C++, true is a boolean literal with numeric value 1."},
     {"id": "q6", "lesson_id": "lesson-2", "question": "Which keyword declares a constant variable?", "options": ["var", "let", "const", "static"], "correct_index": 2, "explanation": "The const keyword makes a variable read-only."},
+    # Lesson 3 - Control Flow
+    {"id": "q7", "lesson_id": "lesson-3", "question": "Which keyword is used to handle a condition that is false?", "options": ["if", "else", "while", "switch"], "correct_index": 1, "explanation": "The else keyword handles the case when the if condition is false."},
+    {"id": "q8", "lesson_id": "lesson-3", "question": "What does `else if` allow you to do?", "options": ["End the program", "Check multiple conditions", "Declare a variable", "Create a loop"], "correct_index": 1, "explanation": "else if lets you check additional conditions after the initial if."},
+    {"id": "q9", "lesson_id": "lesson-3", "question": "What will this print if score = 85? if (score >= 90) cout << 'A'; else if (score >= 80) cout << 'B'; else cout << 'C';", "options": ["A", "B", "C", "Nothing"], "correct_index": 1, "explanation": "85 is >= 80 but not >= 90, so it prints B."},
+
+    # Lesson 4 - Loops
+    {"id": "q10", "lesson_id": "lesson-4", "question": "What does a for loop require?", "options": ["A condition only", "Initialization, condition, and increment", "Just an increment", "A function call"], "correct_index": 1, "explanation": "A for loop has three parts: initialization, condition, and increment."},
+    {"id": "q11", "lesson_id": "lesson-4", "question": "How many times does this loop run? for (int i = 0; i < 5; i++)", "options": ["4", "5", "6", "0"], "correct_index": 1, "explanation": "The loop runs from i=0 to i=4, which is 5 times."},
+    {"id": "q12", "lesson_id": "lesson-4", "question": "When does a while loop stop?", "options": ["After 10 iterations", "When its condition becomes false", "When break is called only", "Never"], "correct_index": 1, "explanation": "A while loop continues until its condition evaluates to false."},
+
+    # Lesson 5 - Functions
+    {"id": "q13", "lesson_id": "lesson-5", "question": "What keyword is used to return a value from a function?", "options": ["send", "output", "return", "give"], "correct_index": 2, "explanation": "The return keyword sends a value back to the caller."},
+    {"id": "q14", "lesson_id": "lesson-5", "question": "What is the return type of this function? int add(int a, int b)", "options": ["void", "float", "int", "string"], "correct_index": 2, "explanation": "The return type is declared before the function name, which is int here."},
+    {"id": "q15", "lesson_id": "lesson-5", "question": "What is the main benefit of using functions?", "options": ["They slow down the program", "They make code reusable", "They replace variables", "They are required in C++"], "correct_index": 1, "explanation": "Functions allow you to write code once and reuse it multiple times."},
+
+    # Lesson 6 - Arrays & Vectors
+    {"id": "q16", "lesson_id": "lesson-6", "question": "Which method adds an element to the end of a vector?", "options": ["add()", "append()", "push_back()", "insert()"], "correct_index": 2, "explanation": "push_back() adds an element to the end of a vector."},
+    {"id": "q17", "lesson_id": "lesson-6", "question": "What is the difference between an array and a vector?", "options": ["Arrays are faster", "Vectors are dynamic in size", "Arrays can store more data", "There is no difference"], "correct_index": 1, "explanation": "Vectors can grow and shrink dynamically, while arrays have a fixed size."},
+    {"id": "q18", "lesson_id": "lesson-6", "question": "Which header is needed to use vectors?", "options": ["<array>", "<list>", "<vector>", "<collection>"], "correct_index": 2, "explanation": "You need to include <vector> to use the vector class."},
+
+    # Lesson 7 - Pointers & References
+    {"id": "q19", "lesson_id": "lesson-7", "question": "What does the & operator do when used in a declaration?", "options": ["Multiplies two values", "Creates a reference", "Dereferences a pointer", "Declares a constant"], "correct_index": 1, "explanation": "When used in a declaration, & creates a reference (alias) to a variable."},
+    {"id": "q20", "lesson_id": "lesson-7", "question": "How do you declare a pointer to an integer?", "options": ["int& ptr", "int* ptr", "ptr int", "pointer<int> ptr"], "correct_index": 1, "explanation": "int* ptr declares a pointer to an integer using the * symbol."},
+    {"id": "q21", "lesson_id": "lesson-7", "question": "What does the * operator do when used with a pointer?", "options": ["Gets the address", "Dereferences to get the value", "Declares a pointer", "Multiplies only"], "correct_index": 1, "explanation": "The * operator dereferences a pointer to access the value at that memory address."},
+
+    # Lesson 8 - Classes & Objects
+    {"id": "q22", "lesson_id": "lesson-8", "question": "What keyword is used to define a class in C++?", "options": ["struct", "object", "class", "type"], "correct_index": 2, "explanation": "The class keyword is used to define a class in C++."},
+    {"id": "q23", "lesson_id": "lesson-8", "question": "What does the public keyword mean in a class?", "options": ["Members are hidden", "Members are accessible from outside the class", "Members are constants", "Members are static"], "correct_index": 1, "explanation": "public means the members can be accessed from outside the class."},
+    {"id": "q24", "lesson_id": "lesson-8", "question": "What is an object?", "options": ["A function inside a class", "An instance of a class", "A type of variable", "A loop structure"], "correct_index": 1, "explanation": "An object is an instance of a class — a concrete realization of the class blueprint."},
 ]
 
 with app.app_context():
