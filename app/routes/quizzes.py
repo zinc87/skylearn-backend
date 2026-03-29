@@ -55,12 +55,8 @@ def submit():
         user_id=g.user_id, lesson_id=lesson_id
     ).first()
 
-    if existing:
-        xp_earned = 0
-    else:
-        xp_earned = score * 10
-        award_xp(g.user_id, xp_earned, f"Quiz: lesson {lesson_id}")
-
+    xp_earned = 0
+    
     submission = QuizSubmission(
         id=str(uuid.uuid4()),
         user_id=g.user_id,
