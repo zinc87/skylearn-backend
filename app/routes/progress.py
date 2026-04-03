@@ -8,6 +8,7 @@ from app import db
 
 bp = Blueprint("progress", __name__, url_prefix="/api/progress")
 
+
 @bp.route("/", methods=["GET"])
 @require_auth
 def get_progress():
@@ -38,6 +39,8 @@ def get_progress():
     else:
         initials = user.username[:2].upper()
 
+    # Streak is incremented only if the user was active exactly yesterday.
+    # If they miss a day, streak resets to 1. If already active today, no change.
     today = date.today()
     if user.last_active is None:
         user.streak = 1

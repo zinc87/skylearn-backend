@@ -1,6 +1,8 @@
 from app import db
 from datetime import datetime
 
+# Tracks which lessons a user has completed. The unique constraint on (user_id, lesson_id)
+# prevents duplicate completions and double XP awards.
 class UserProgress(db.Model):
     __tablename__ = "user_progress"
 
@@ -11,7 +13,7 @@ class UserProgress(db.Model):
 
     __table_args__ = (db.UniqueConstraint("user_id", "lesson_id"),)
 
-
+# Logs every XP award event for a user. Used to display XP history on the profile page.
 class XpHistory(db.Model):
     __tablename__ = "xp_history"
 

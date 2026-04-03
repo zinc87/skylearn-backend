@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Loads environment variables from .env file.
+# manually created in EC2 server
+# not in use now
 class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",

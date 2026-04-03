@@ -28,6 +28,9 @@ def get_by_lesson():
         for q in questions
     ])
 
+
+# Grade each answer by comparing user's selected index to correct_index.
+# answers is a dict of {questionId: selectedIndex} sent from the frontend.
 @bp.route("/submit", methods=["POST"])
 @require_auth
 def submit():
@@ -55,6 +58,8 @@ def submit():
         user_id=g.user_id, lesson_id=lesson_id
     ).first()
 
+    # XP is awarded when the lesson is marked complete (via /lessons/<id>/complete),
+    # not from the quiz. This prevents double XP awards.
     xp_earned = 0
     
     submission = QuizSubmission(

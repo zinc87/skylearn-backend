@@ -12,6 +12,8 @@ def get_leaderboard():
     users = User.query.order_by(User.xp.desc()).all()
 
     result = []
+    # Avatar initials are generated from the first letter of each word in the username.
+    # Single-word usernames use the first two characters.
     for rank, user in enumerate(users, start=1):
         parts = user.username.split()
         if len(parts) >= 2:

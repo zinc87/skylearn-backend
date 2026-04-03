@@ -8,6 +8,8 @@ from app import db
 
 _jwks_cache = None
 
+# Cognito's public keys are cached in memory to avoid fetching on every request.
+# Keys only change when Cognito rotates them (rare), so caching is safe.
 def _get_jwks():
     """Fetch and cache Cognito's public keys."""
     global _jwks_cache
@@ -53,6 +55,8 @@ def require_auth(f):
 
             # Auto-create or update user record on login
             user = User.query.get(g.user_id)
+            # Race condition guard: two simultaneous first-time requests could both try to INSERT
+            # the same user. The inner try/except rolls back the duplicate and continues safely.
             if not user:
                 try:
                     user = User(
@@ -74,22 +78,4 @@ def require_auth(f):
 
         return f(*args, **kwargs)
     return decorated
-
-# def require_auth(f):
-#     """DEV ONLY — bypasses Cognito, uses a fake test user."""
-#     @wraps(f)
-#     def decorated(*args, **kwargs):
-#         g.user_id = "test-user-001"
-#         g.email = "test@skylearn.dev"
-#         g.username = "TestUser"
-
-#         # Auto-create the fake user if it doesn't exist
-#         user = User.query.get(g.user_id)
-#         if not user:
-#             user = User(id=g.user_id, username=g.username, email=g.email)
-#             db.session.add(user)
-#             db.session.commit()
-
-#         return f(*args, **kwargs)
-#     return decorated
 

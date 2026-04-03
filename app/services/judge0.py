@@ -3,6 +3,9 @@ from app.config import Config
 
 CPP_LANGUAGE_ID = 54  # C++ (GCC 9.2.0)
 
+# Submits code to the local Judge0 instance running in Docker on port 2358.
+# Uses wait=true so the response is returned synchronously (no polling needed).
+# cpu_time_limit and memory_limit prevent runaway submissions.
 def run_code(source_code: str, stdin: str = "") -> dict:
     """Submit C++ code to Judge0 and return results."""
     payload = {

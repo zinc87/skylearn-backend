@@ -1,6 +1,8 @@
 from app import db
 from datetime import datetime
 
+# Represents a C++ lesson. display_order controls the sequential unlock order.
+# content stores the lesson body as Markdown. code_template is the starter C++ code shown in the editor.
 class Lesson(db.Model):
     __tablename__ = "lessons"
 

@@ -1,6 +1,8 @@
 from app import db
 from datetime import datetime, date
 
+# Represents a registered user. The id field uses the Cognito 'sub' claim
+# as the primary key so the database user always matches the Cognito identity.
 class User(db.Model):
     __tablename__ = "users"
 

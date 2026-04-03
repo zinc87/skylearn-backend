@@ -8,6 +8,8 @@ import uuid
 
 bp = Blueprint("lessons", __name__, url_prefix="/api/lessons")
 
+# A lesson is locked if the previous lesson has not been completed.
+# The first lesson (index 0) is always unlocked.
 @bp.route("/", methods=["GET"])
 @require_auth
 def get_all():
@@ -60,6 +62,8 @@ def get_by_id(lesson_id):
         "codeTemplate": lesson.code_template,
     })
 
+# Returns 409 if already completed to prevent duplicate XP awards.
+# The unique constraint on UserProgress also enforces this at the DB level.
 @bp.route("/<lesson_id>/complete", methods=["POST"])
 @require_auth
 def complete(lesson_id):

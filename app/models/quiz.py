@@ -2,6 +2,8 @@ from app import db
 from datetime import datetime
 import json
 
+# A single quiz question linked to a lesson. options is a JSON array of answer strings.
+# correct_index is 0-based and compared against the user's selected answer index.
 class QuizQuestion(db.Model):
     __tablename__ = "quiz_questions"
 
@@ -12,7 +14,7 @@ class QuizQuestion(db.Model):
     correct_index = db.Column(db.Integer, nullable=False)
     explanation = db.Column(db.Text)
 
-
+# Records a user's quiz attempt. Only one submission per user per lesson is used for XP.
 class QuizSubmission(db.Model):
     __tablename__ = "quiz_submissions"
 
